@@ -1,0 +1,11 @@
+C:\Users\freit\Documents\All\Workspace\NewProject\native-launcher\target\debug\deps\ecolor-c789b094d577c401.d: C:\Users\freit\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\ecolor-0.24.1\src\lib.rs C:\Users\freit\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\ecolor-0.24.1\src\color32.rs C:\Users\freit\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\ecolor-0.24.1\src\hsva_gamma.rs C:\Users\freit\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\ecolor-0.24.1\src\hsva.rs C:\Users\freit\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\ecolor-0.24.1\src\rgba.rs
+
+C:\Users\freit\Documents\All\Workspace\NewProject\native-launcher\target\debug\deps\libecolor-c789b094d577c401.rlib: C:\Users\freit\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\ecolor-0.24.1\src\lib.rs C:\Users\freit\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\ecolor-0.24.1\src\color32.rs C:\Users\freit\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\ecolor-0.24.1\src\hsva_gamma.rs C:\Users\freit\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\ecolor-0.24.1\src\hsva.rs C:\Users\freit\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\ecolor-0.24.1\src\rgba.rs
+
+C:\Users\freit\Documents\All\Workspace\NewProject\native-launcher\target\debug\deps\libecolor-c789b094d577c401.rmeta: C:\Users\freit\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\ecolor-0.24.1\src\lib.rs C:\Users\freit\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\ecolor-0.24.1\src\color32.rs C:\Users\freit\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\ecolor-0.24.1\src\hsva_gamma.rs C:\Users\freit\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\ecolor-0.24.1\src\hsva.rs C:\Users\freit\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\ecolor-0.24.1\src\rgba.rs
+
+C:\Users\freit\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\ecolor-0.24.1\src\lib.rs:
+C:\Users\freit\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\ecolor-0.24.1\src\color32.rs:
+C:\Users\freit\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\ecolor-0.24.1\src\hsva_gamma.rs:
+C:\Users\freit\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\ecolor-0.24.1\src\hsva.rs:
+C:\Users\freit\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\ecolor-0.24.1\src\rgba.rs:
