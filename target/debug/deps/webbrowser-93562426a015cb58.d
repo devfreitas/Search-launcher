@@ -1,0 +1,11 @@
+C:\Users\freit\Documents\All\Workspace\Launcher\Search-launcher\target\debug\deps\webbrowser-93562426a015cb58.d: C:\Users\freit\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\webbrowser-0.8.15\src\lib.rs C:\Users\freit\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\webbrowser-0.8.15\src\windows.rs C:\Users\freit\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\webbrowser-0.8.15\src\common.rs
+
+C:\Users\freit\Documents\All\Workspace\Launcher\Search-launcher\target\debug\deps\libwebbrowser-93562426a015cb58.rlib: C:\Users\freit\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\webbrowser-0.8.15\src\lib.rs C:\Users\freit\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\webbrowser-0.8.15\src\windows.rs C:\Users\freit\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\webbrowser-0.8.15\src\common.rs
+
+C:\Users\freit\Documents\All\Workspace\Launcher\Search-launcher\target\debug\deps\libwebbrowser-93562426a015cb58.rmeta: C:\Users\freit\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\webbrowser-0.8.15\src\lib.rs C:\Users\freit\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\webbrowser-0.8.15\src\windows.rs C:\Users\freit\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\webbrowser-0.8.15\src\common.rs
+
+C:\Users\freit\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\webbrowser-0.8.15\src\lib.rs:
+C:\Users\freit\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\webbrowser-0.8.15\src\windows.rs:
+C:\Users\freit\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\webbrowser-0.8.15\src\common.rs:
+
+# env-dep:WEBBROWSER_WASM_TARGET

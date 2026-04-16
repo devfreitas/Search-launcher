@@ -28,7 +28,7 @@ impl LauncherApp {
             selected_index: 0,
             is_visible,
             was_visible_last_frame: false,
-            current_height: 60.0,
+            current_height: 70.0,
             icon_manager: IconManager::new(45),
         }
     }
@@ -36,7 +36,6 @@ impl LauncherApp {
     fn execute_selected(&mut self, ctx: &egui::Context) {
         let query = self.search_query.trim();
 
-        // 1. PESQUISA WEB (Atalho 'g ')
         if query.starts_with("g ") && query.len() > 2 {
             let search_term = &query[2..];
             let url = format!("https://www.google.com/search?q={}", search_term.replace(' ', "+"));
@@ -48,23 +47,18 @@ impl LauncherApp {
             return;
         }
 
-        // 2. EXECUTAR APP OU PASTA
         if let Some(app) = self.filtered.get(self.selected_index) {
             let path_str = app.path.to_str().unwrap_or("");
 
             if path_str.starts_with("UWP:") {
-                // Execução Universal de Apps da Store (WhatsApp, Calc, etc)
                 let app_id = &path_str[4..];
                 let shell_args = format!("shell:appsFolder\\{}", app_id);
-                
                 let explorer = HSTRING::from("explorer.exe");
                 let args = HSTRING::from(shell_args);
-                
                 unsafe {
                     ShellExecuteW(None, w!("open"), &explorer, &args, PCWSTR::null(), SW_SHOWNORMAL);
                 }
             } else {
-                // Execução de ficheiros .exe, .lnk e Pastas normais
                 let path = HSTRING::from(path_str);
                 unsafe {
                     ShellExecuteW(None, w!("open"), &path, PCWSTR::null(), PCWSTR::null(), SW_SHOWNORMAL);
@@ -79,8 +73,8 @@ impl LauncherApp {
         self.search_query.clear();
         self.selected_index = 0;
         self.filtered.clear();
-        self.current_height = 60.0;
-        ctx.send_viewport_cmd(egui::ViewportCommand::InnerSize(egui::vec2(500.0, self.current_height)));
+        self.current_height = 70.0;
+        ctx.send_viewport_cmd(egui::ViewportCommand::InnerSize(egui::vec2(600.0, self.current_height)));
         ctx.send_viewport_cmd(egui::ViewportCommand::OuterPosition(egui::pos2(-10000.0, -10000.0)));
         ctx.request_repaint(); 
     }
@@ -93,10 +87,10 @@ impl eframe::App for LauncherApp {
         self.was_visible_last_frame = current_visibility;
 
         if just_opened {
-            self.current_height = 60.0;
-            ctx.send_viewport_cmd(egui::ViewportCommand::InnerSize(egui::vec2(500.0, self.current_height)));
+            self.current_height = 70.0;
+            ctx.send_viewport_cmd(egui::ViewportCommand::InnerSize(egui::vec2(600.0, self.current_height)));
             if let Some(monitor_size) = ctx.input(|i| i.viewport().monitor_size) {
-                let center_pos = egui::pos2((monitor_size.x - 500.0) / 2.0, monitor_size.y * 0.30);
+                let center_pos = egui::pos2((monitor_size.x - 600.0) / 2.0, monitor_size.y * 0.25);
                 ctx.send_viewport_cmd(egui::ViewportCommand::OuterPosition(center_pos));
             }
             ctx.send_viewport_cmd(egui::ViewportCommand::Focus);
@@ -104,46 +98,53 @@ impl eframe::App for LauncherApp {
 
         if !current_visibility { return; }
 
-        let mut target_height = 60.0; 
+        let mut target_height = 70.0; 
         if !self.filtered.is_empty() {
-            target_height += 16.0; 
-            let items_to_show = self.filtered.len().min(6) as f32;
-            target_height += items_to_show * 38.0; 
+            target_height += 12.0; 
+            let items_to_show = self.filtered.len().min(8) as f32;
+            target_height += items_to_show * 44.0; 
+            target_height += 10.0; 
         }
 
         if (self.current_height - target_height).abs() > 0.5 {
             self.current_height = target_height;
-            ctx.send_viewport_cmd(egui::ViewportCommand::InnerSize(egui::vec2(500.0, self.current_height)));
+            ctx.send_viewport_cmd(egui::ViewportCommand::InnerSize(egui::vec2(600.0, self.current_height)));
         }
 
+        // Estilo moderno "Acrylic-like"
         let frame_style = egui::Frame {
-            fill: egui::Color32::from_rgba_premultiplied(22, 22, 24, 245),
-            rounding: egui::Rounding::ZERO, 
-            stroke: egui::Stroke::new(1.0, egui::Color32::from_rgba_premultiplied(50, 50, 55, 255)),
-            inner_margin: egui::Margin::same(12.0),
+            fill: egui::Color32::from_rgba_premultiplied(28, 28, 32, 252),
+            rounding: egui::Rounding::same(12.0), 
+            stroke: egui::Stroke::new(1.0, egui::Color32::from_rgba_premultiplied(70, 70, 80, 255)),
+            inner_margin: egui::Margin::symmetric(20.0, 15.0),
             ..Default::default()
         };
 
         egui::CentralPanel::default().frame(frame_style).show(ctx, |ui| {
             ui.style_mut().visuals.extreme_bg_color = egui::Color32::TRANSPARENT;
-            ui.style_mut().visuals.selection.bg_fill = egui::Color32::from_rgb(85, 85, 90);
+            
+            ui.horizontal(|ui| {
+                ui.add_space(2.0);
+                ui.label(egui::RichText::new("🔍").size(20.0));
+                ui.add_space(8.0);
+                
+                let response = ui.add(egui::TextEdit::singleline(&mut self.search_query)
+                    .hint_text("O que vamos abrir hoje?")
+                    .font(egui::FontId::proportional(22.0))
+                    .frame(false)
+                    .desired_width(f32::INFINITY));
 
-            let response = ui.add(egui::TextEdit::singleline(&mut self.search_query)
-                .hint_text("Pesquisar ou 'g <termo>'...")
-                .font(egui::FontId::proportional(22.0))
-                .frame(false)
-                .desired_width(f32::INFINITY));
+                response.request_focus();
 
-            response.request_focus();
-
-            if response.changed() {
-                if self.search_query.trim().is_empty() {
-                    self.filtered.clear();
-                } else if !self.search_query.trim().starts_with("g ") {
-                    self.filtered = search_apps(&self.search_query, &self.index);
+                if response.changed() {
+                    if self.search_query.trim().is_empty() {
+                        self.filtered.clear();
+                    } else if !self.search_query.trim().starts_with("g ") {
+                        self.filtered = search_apps(&self.search_query, &self.index);
+                    }
+                    self.selected_index = 0;
                 }
-                self.selected_index = 0;
-            }
+            });
 
             if ui.input(|i| i.key_pressed(egui::Key::ArrowDown)) {
                 self.selected_index = (self.selected_index + 1).min(self.filtered.len().saturating_sub(1));
@@ -159,18 +160,20 @@ impl eframe::App for LauncherApp {
             }
 
             if !self.filtered.is_empty() && !self.search_query.trim().starts_with("g ") {
-                ui.add_space(8.0);
-                ui.separator();
-                ui.add_space(8.0);
+                ui.add_space(10.0);
+                ui.painter().hline(ui.cursor().left()..=ui.cursor().right(), ui.cursor().top(), egui::Stroke::new(1.0, egui::Color32::from_rgba_premultiplied(60, 60, 70, 100)));
+                ui.add_space(10.0);
 
                 egui::ScrollArea::vertical().show(ui, |ui| {
+                    ui.spacing_mut().item_spacing.y = 4.0;
                     for (i, app) in self.filtered.iter().enumerate() {
                         let is_selected = i == self.selected_index;
+                        
                         let item_frame = egui::Frame::none()
-                            .rounding(0.0)
-                            .inner_margin(egui::Margin::symmetric(10.0, 6.0))
+                            .rounding(egui::Rounding::same(8.0))
+                            .inner_margin(egui::Margin::symmetric(12.0, 8.0))
                             .fill(if is_selected {
-                                egui::Color32::from_rgba_premultiplied(70, 70, 75, 200)
+                                egui::Color32::from_rgba_premultiplied(60, 60, 80, 200)
                             } else {
                                 egui::Color32::TRANSPARENT
                             });
@@ -178,31 +181,55 @@ impl eframe::App for LauncherApp {
                         item_frame.show(ui, |ui| {
                             ui.set_width(ui.available_width());
                             ui.horizontal(|ui| {
-                                // O IconManager só consegue extrair ícones de .exe ou .lnk reais
-                                // Para UWP, o fallback cinzento é usado para manter a RAM baixa
-                                if !app.path.to_str().unwrap_or("").starts_with("UWP:") {
-                                    if let Some(icon) = self.icon_manager.get_icon(ctx, &app.path) {
-                                        ui.add(egui::Image::new(&icon).fit_to_exact_size(egui::vec2(18.0, 18.0)));
-                                    } else {
-                                        let (rect, _) = ui.allocate_at_least(egui::vec2(18.0, 18.0), egui::Sense::hover());
-                                        ui.painter().rect_filled(rect.shrink(1.0), 0.0, egui::Color32::from_gray(50));
-                                    }
+                                let path_str = app.path.to_str().unwrap_or("");
+                                
+                                if path_str.starts_with("UWP:") {
+                                    ui.label(egui::RichText::new("📱").size(18.0));
+                                } else if path_str.contains("📁") || app.name.contains("📁") {
+                                    ui.label(egui::RichText::new("📁").size(18.0));
+                                } else if let Some(icon) = self.icon_manager.get_icon(ctx, &app.path) {
+                                    ui.add(egui::Image::new(&icon).fit_to_exact_size(egui::vec2(22.0, 22.0)));
                                 } else {
-                                    // Fallback para apps da Microsoft Store
-                                    let (rect, _) = ui.allocate_at_least(egui::vec2(18.0, 18.0), egui::Sense::hover());
-                                    ui.painter().rect_filled(rect.shrink(1.0), 0.0, egui::Color32::from_gray(50));
+                                    ui.label(egui::RichText::new("🚀").size(18.0));
                                 }
 
-                                ui.add_space(8.0);
-                                let text_color = if is_selected { egui::Color32::WHITE } else { egui::Color32::LIGHT_GRAY };
-                                ui.label(egui::RichText::new(&app.name).color(text_color).size(15.0));
+                                ui.add_space(12.0);
+                                
+                                let text_color = if is_selected { 
+                                    egui::Color32::WHITE 
+                                } else { 
+                                    egui::Color32::from_gray(200) 
+                                };
+                                
+                                ui.label(egui::RichText::new(&app.name.replace("📁 ", ""))
+                                    .color(text_color)
+                                    .size(16.0)
+                                    .strong());
+                                    
+                                if is_selected {
+                                    ui.with_layout(egui::Layout::right_to_left(egui::Align::Center), |ui| {
+                                        ui.label(egui::RichText::new("Enter para abrir").size(10.0).color(egui::Color32::from_gray(120)));
+                                    });
+                                }
                             });
                         });
                     }
                 });
             } else if self.search_query.trim().starts_with("g ") {
-                ui.add_space(10.0);
-                ui.label(egui::RichText::new("🌐 Pesquisar no Google...").color(egui::Color32::LIGHT_BLUE).italics());
+                ui.add_space(15.0);
+                egui::Frame::none()
+                    .fill(egui::Color32::from_rgba_premultiplied(40, 40, 60, 150))
+                    .rounding(8.0)
+                    .inner_margin(10.0)
+                    .show(ui, |ui| {
+                        ui.horizontal(|ui| {
+                            ui.label(egui::RichText::new("🌐").size(18.0));
+                            ui.add_space(8.0);
+                            ui.label(egui::RichText::new(format!("Pesquisar no Google: {}", &self.search_query[2..]))
+                                .color(egui::Color32::LIGHT_BLUE)
+                                .size(14.0));
+                        });
+                    });
             }
         });
     }

@@ -7,7 +7,7 @@ use crossbeam_channel::Sender;
 
 pub fn listen_for_hotkey(tx: Sender<()>) {
     unsafe {
-        let result = RegisterHotKey(None, 1, MOD_ALT, 0x57);
+        let result = RegisterHotKey(None, 1, MOD_ALT, 0x57); // alt + w
 
         if result.is_ok() {
             let mut msg = MSG::default();
