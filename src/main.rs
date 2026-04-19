@@ -6,7 +6,6 @@ mod hotkey;
 mod indexer;
 mod search;
 mod ui;
-mod icon_loader;
 
 use eframe::egui;
 use std::thread;
