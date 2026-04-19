@@ -1716,6 +1716,7 @@ dependencies = [
  "fuzzy-matcher",
  "image",
  "mimalloc",
+ "rayon",
  "serde",
  "serde_json",
  "tray-icon",
